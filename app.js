@@ -141,15 +141,12 @@ app.post("/login", function(req, res, next){
 
 app.get('/secrets', catchAsync(async(req, res, next)=>{
 
-    /*const token = null;
-    if(req && req.cookie){
-        token = req.cookie['jwt'];
-    } */
-
+    const token = null;
 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1];
     } 
+    
     console.log(token);
 
     if(!token){
@@ -162,6 +159,8 @@ app.get('/secrets', catchAsync(async(req, res, next)=>{
     const decoded = await promisify(jwt.verify)(token, PUB_KEY);
 
     console.log(decoded);
+
+    res.render('secrets');
 
     next();
 })); 
